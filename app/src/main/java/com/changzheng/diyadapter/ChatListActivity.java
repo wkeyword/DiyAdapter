@@ -123,9 +123,9 @@ public class ChatListActivity extends ListActivity {
             if (convertView==null){
                 holderView=new HolderView();
                 if (getItemViewType(position)==0){
-                    convertView=LayoutInflater.from(context).inflate(R.layout.chat_right,parent,false);
+                    convertView=LayoutInflater.from(context).inflate(R.layout.chat_right,null);
                 }else {
-                    convertView=LayoutInflater.from(context).inflate(R.layout.chat_left,parent,false);
+                    convertView=LayoutInflater.from(context).inflate(R.layout.chat_left,null);
                 }
 //                convertView=LayoutInflater.from(context).inflate(R.layout.chat_left, null);
                 holderView.holderIv= (ImageView) convertView.findViewById(R.id.icon);
