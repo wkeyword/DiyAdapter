@@ -2,13 +2,17 @@ package com.changzheng.diyadapter;
 
 import android.app.ListActivity;
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,14 +83,28 @@ public class ChatListActivity extends ListActivity {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
 //1. 设置当前列表项的布局  2.装配当前列表项的数据
-            View itemView = LayoutInflater.from(context).inflate(R.layout.chatting_item_left,null);
+//            把实例化的布局根节点对象通过addView的形式添加到parent中,而adapterView不支持addview添加子控件,通过适配器的形式来装配
+//            View itemView = LayoutInflater.from(context).inflate(R.layout.chat_left, null);//列表项根节点布局对象宽和高以默认的值赋值(wrap——content)
+//            View itemView = LayoutInflater.from(context).inflate(R.layout.chat_left, parent,false);
+            View itemView = LayoutInflater.from(context).inflate(R.layout.chat_left,null);
 
 //            2.1 获取当前需要装配的数据
-            ChatMessage chatMessage=mData.get(position);
+            final ChatMessage chatMessage=mData.get(position);
 //            2.2 通过列表项实例化后的根节点 来引用子控件
+            ImageView iconIv = (ImageView) itemView.findViewById(R.id.icon);
+            TextView msgTv = (TextView) itemView.findViewById(R.id.message);
+//            2.3 子控件设置数据
+            msgTv.setText("机器人:" + chatMessage.message);
+//            自定义控件的作用"操纵列表项的子控件的属性,操作列表项要填充的数据
+            msgTv.setTextColor(Color.BLUE);
+            iconIv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(context,chatMessage.message+chatMessage.id,Toast.LENGTH_SHORT).show();
+                }
+            });
 
-
-            return null;
+            return itemView;
         }
 
         @Override
