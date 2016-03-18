@@ -80,19 +80,22 @@ public class ChatListActivity extends ListActivity {
           parent:  ViewGroup ->  ListView
 
  */
+//        通过convertView:可回收的View  来优化自定义适配器
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
 //1. 设置当前列表项的布局  2.装配当前列表项的数据
 //            把实例化的布局根节点对象通过addView的形式添加到parent中,而adapterView不支持addview添加子控件,通过适配器的形式来装配
 //            View itemView = LayoutInflater.from(context).inflate(R.layout.chat_left, null);//列表项根节点布局对象宽和高以默认的值赋值(wrap——content)
 //            View itemView = LayoutInflater.from(context).inflate(R.layout.chat_left, parent,false);
-            View itemView = LayoutInflater.from(context).inflate(R.layout.chat_left,null);
-
+//            View itemView = LayoutInflater.from(context).inflate(R.layout.chat_left, null);
+            if (convertView==null){
+                convertView=LayoutInflater.from(context).inflate(R.layout.chat_left, null);
+            }
 //            2.1 获取当前需要装配的数据
             final ChatMessage chatMessage=mData.get(position);
 //            2.2 通过列表项实例化后的根节点 来引用子控件
-            ImageView iconIv = (ImageView) itemView.findViewById(R.id.icon);
-            TextView msgTv = (TextView) itemView.findViewById(R.id.message);
+            ImageView iconIv = (ImageView) convertView.findViewById(R.id.icon);
+            TextView msgTv = (TextView) convertView.findViewById(R.id.message);
 //            2.3 子控件设置数据
             msgTv.setText("机器人:" + chatMessage.message);
 //            自定义控件的作用"操纵列表项的子控件的属性,操作列表项要填充的数据
@@ -104,7 +107,7 @@ public class ChatListActivity extends ListActivity {
                 }
             });
 
-            return itemView;
+            return convertView;
         }
 
         @Override
@@ -117,4 +120,5 @@ public class ChatListActivity extends ListActivity {
             return super.getViewTypeCount();
         }
     }
+
 }
