@@ -4,6 +4,7 @@ import android.app.ListActivity;
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -49,23 +50,42 @@ public class ChatListActivity extends ListActivity {
     }
 
     private class ChatAdapter extends BaseAdapter{
+//        取得列表项的列数
         @Override
         public int getCount() {
-            return 0;
+
+            return mData==null?0:mData.size();
         }
 
+//        返回当前列表项要展示的数据position当前要展示的数据在适配器中的位置
         @Override
         public Object getItem(int position) {
-            return null;
+            return mData==null?0:mData.get(position);
         }
 
+//        返回当前要展示的列表项的数据的id属性值
         @Override
         public long getItemId(int position) {
-            return 0;
+            return mData==null?0:mData.get(position).id;
         }
 
+
+/*        返回当前要展示的列表项视图对象
+          position:当前要展示的数据在适配器中的位置
+          convertView : View,可回收的View
+          parent:  ViewGroup ->  ListView
+
+ */
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
+//1. 设置当前列表项的布局  2.装配当前列表项的数据
+            View itemView = LayoutInflater.from(context).inflate(R.layout.chatting_item_left,null);
+
+//            2.1 获取当前需要装配的数据
+            ChatMessage chatMessage=mData.get(position);
+//            2.2 通过列表项实例化后的根节点 来引用子控件
+
+
             return null;
         }
 
